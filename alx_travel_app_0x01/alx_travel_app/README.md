@@ -66,30 +66,3 @@ Category: categorize types of travel offers
 📄 License
 This project is licensed under the MIT License.
 
-# ALX Travel App 0x02
-
-This is a duplicated version of the **ALX Travel App 0x01** project.  
-It serves as a continuation and testing ground for new features and improvements.
-
----
-
-## 🚀 Project Description
-The **ALX Travel App** is a simple travel booking application built with **Node.js** and supporting tools.  
-It demonstrates backend development, API handling, and project structuring.
-
----
-
-## 📂 Project Structure
-- `src/` → Source code  
-- `package.json` → Project dependencies  
-- `README.md` → Project documentation  
-
----
-
-## 🔧 Installation
-Clone the repository and install dependencies:
-
-```bash
-git clone https://github.com/<your-username>/alx_travel_app_0x02.git
-cd alx_travel_app_0x02
-npm install
