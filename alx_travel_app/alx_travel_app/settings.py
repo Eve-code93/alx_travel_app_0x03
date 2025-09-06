@@ -46,7 +46,7 @@ ROOT_URLCONF = "alx_travel_app.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],  # optional: project-level templates
+        "DIRS": [BASE_DIR / "templates"],  # project-level templates
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -67,9 +67,17 @@ DATABASES = {
     "default": dj_database_url.config(
         default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
         conn_max_age=600,
-        ssl_require=os.environ.get("RENDER", False),
     )
 }
+
+# If Render provides DATABASE_URL (Postgres), configure it with SSL
+DATABASE_URL = os.environ.get("DATABASE_URL")
+if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
+    DATABASES["default"] = dj_database_url.config(
+        default=DATABASE_URL,
+        conn_max_age=600,
+        ssl_require=True,
+    )
 
 
 # Password validation
@@ -99,7 +107,7 @@ MEDIA_ROOT = BASE_DIR / "media"
 # Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# DRF settings (optional)
+# DRF settings
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.AllowAny",
