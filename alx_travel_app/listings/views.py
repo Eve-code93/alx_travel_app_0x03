@@ -6,6 +6,19 @@ import requests
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import Payment
+from rest_framework import viewsets
+from .models import Booking
+from .serializers import BookingSerializer
+from .tasks import send_booking_confirmation
+
+class BookingViewSet(viewsets.ModelViewSet):
+    queryset = Booking.objects.all()
+    serializer_class = BookingSerializer
+
+    def perform_create(self, serializer):
+        booking = serializer.save()
+        # Trigger Celery task asynchronously
+        send_booking_confirmation.delay(booking.user.email, booking.id)
 
 CHAPA_SECRET_KEY = os.getenv("CHAPA_SECRET_KEY")
 CHAPA_BASE_URL = "https://api.chapa.co/v1"
